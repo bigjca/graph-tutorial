@@ -1,0 +1,35 @@
+<h1>Drive Items</h1>
+<table class="table">
+ <thead>
+   <th scope="col">ID</th>
+   <th scope="col">Name</th>
+   <th scope="col">Create Date</th>
+ </thead>
+ <tbody>
+   <tr *ngFor="let item of drive">
+     <td>{{item.id}}</td>
+     <td><a [href]="item.webUrl">{{item.name}}</a></td>
+     <td>{{item.createdDateTime | date}}</td>
+   </tr>
+ </tbody>
+</table>
+<h1>Spreadsheet Sandbox</h1>
+<form [formGroup]="form" (ngSubmit)="formSubmit()">
+    <div class="form-group">
+        <label>File ID</label>
+        <input class="form-control" formControlName="id">
+    </div>
+    <div class="form-group">
+        <label>Sheet Name</label>
+        <input class="form-control" formControlName="sheetName">
+    </div>
+    <div class="form-group">
+        <label>Cell Address</label>
+        <input class="form-control" formControlName="cellAddress">
+    </div>
+    <div class="form-group">
+        <label>Cell Value</label>
+        <input class="form-control" formControlName="cellValue">
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>

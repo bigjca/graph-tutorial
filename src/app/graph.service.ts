@@ -4,6 +4,7 @@ import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthService } from './auth.service';
 import { Event } from './event';
 import { AlertsService } from './alerts.service';
+import { DriveItem } from './drive-item';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,56 @@ export class GraphService {
 
       return result.value;
     } catch (error) {
-      this.alertsService.add('Could not get events', JSON.stringify(error, null, 2));
+      this.handleError('Could not get events', error);
     }
+  }
+
+  async getDriveChildren(): Promise<DriveItem[]> {
+    try {
+      let result = await this.graphClient
+      .api('/me/drive/root/children')
+      .get();
+      return result.value;
+    } catch(error) {
+      this.handleError('Could not get files from drive', error);
+    }
+  }
+
+  async getWorkbookSesson(id: string): Promise<any> {
+    try {
+      let result = await this.graphClient
+      .api(`/me/drive/items/${id}/workbook/createSession`)
+      .post({persistChanges: true});
+      return result;
+    } catch(error) {
+      this.handleError('Unable to get workbook session', error);
+    }
+  }
+
+  async getWorkbookSheets(id: string): Promise<any> {
+    try {
+      let result = await this.graphClient.api(`/me/drive/items/${id}/workbook/worksheets`).get();
+      return result.value;
+    } catch(error) {
+      this.handleError('Unable to get workbook sheets', error);
+    }
+  }
+
+  async updateWorkbookCell(id: string, sessionId: string, sheetName: string, cellAddress: string, cellValue: any) {
+    try {
+      let result = await this.graphClient
+      .api(`/me/drive/items/${id}/workbook/worksheets/${sheetName}/range(address='${cellAddress}')`)
+      .header('Workbook-Session-Id', sessionId)
+      .patch({
+        values: [[cellValue]]
+      });
+      return result;
+    } catch(error) {
+      this.handleError('unable to update cell', error);
+    }
+  }
+
+  handleError(message: string, error: any) {
+    this.alertsService.add(message, JSON.stringify(error, null, 2));
   }
 }

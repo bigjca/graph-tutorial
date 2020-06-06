@@ -12,6 +12,8 @@ import { AlertsComponent } from './alerts/alerts.component';
 import { MsalModule } from '@azure/msal-angular';
 import { OAuthSettings } from '../oauth';
 import { CalendarComponent } from './calendar/calendar.component';
+import { SandboxComponent } from './sandbox/sandbox.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,13 @@ import { CalendarComponent } from './calendar/calendar.component';
     NavBarComponent,
     HomeComponent,
     AlertsComponent,
-    CalendarComponent
+    CalendarComponent,
+    SandboxComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     NgbModule,
     FontAwesomeModule,
     MsalModule.forRoot({

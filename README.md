@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
-The code for this project originates from this [Microsoft Tutorial](https://docs.microsoft.com/en-us/graph/tutorials/angular)
+The code for this project originates from this [Microsoft Tutorial](https://docs.microsoft.com/en-us/graph/tutorials/angular) from this [Github Project](https://github.com/microsoftgraph/msgraph-training-angularspa)
 
 ## Development server
 

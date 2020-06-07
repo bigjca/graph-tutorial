@@ -1,8 +1,8 @@
-import { DriveItem } from './../drive-item';
 import { AlertsService } from './../alerts.service';
 import { GraphService } from './../graph.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { DriveItem, WorkbookSessionInfo } from '@microsoft/microsoft-graph-types';
 
 @Component({
   selector: 'app-sandbox',
@@ -34,7 +34,7 @@ export class SandboxComponent implements OnInit {
     const sheetName = this.form.value.sheetName;
     const cellAddress = this.form.value.cellAddress;
     const cellValue = this.form.value.cellValue;
-    const session = await this.graphService.getWorkbookSesson(fileId);
+    const session: WorkbookSessionInfo = await this.graphService.getWorkbookSesson(fileId);
     //const sheets = await this.graphService.getWorkbookSheets(this.form.value.id);
     const update = await this.graphService.updateWorkbookCell(fileId, session.id, sheetName, cellAddress, cellValue);
     console.log(update);

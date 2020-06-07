@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@microsoft/microsoft-graph-client';
-
 import { AuthService } from './auth.service';
-import { Event } from './event';
 import { AlertsService } from './alerts.service';
-import { DriveItem } from './drive-item';
+import  { Event, WorkbookSessionInfo } from '@microsoft/microsoft-graph-types'
+import { DriveItem } from '@microsoft/microsoft-graph-types';
 
 @Injectable({
   providedIn: 'root'
@@ -60,11 +59,12 @@ export class GraphService {
     }
   }
 
-  async getWorkbookSesson(id: string): Promise<any> {
+  async getWorkbookSesson(id: string): Promise<WorkbookSessionInfo> {
     try {
+      const workbookSessionInfo: WorkbookSessionInfo = {persistChanges: true};
       let result = await this.graphClient
       .api(`/me/drive/items/${id}/workbook/createSession`)
-      .post({persistChanges: true});
+      .post(workbookSessionInfo);
       return result;
     } catch(error) {
       this.handleError('Unable to get workbook session', error);
